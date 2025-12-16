@@ -24,13 +24,14 @@ public class FileStorageServiceImpl implements FileStorageService {
             if (originalFilename != null && originalFilename.contains(".")) {
                 fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
             }
-            String publicId = folder + "/" + UUID.randomUUID().toString();
+            String publicId ="car-rental/" + folder + "/" + UUID.randomUUID().toString();
 
             Map uploadResult = cloudinary.uploader().upload(file.getBytes(),
                     ObjectUtils.asMap(
                             "public_id", publicId,
-                            "folder", "car-rental/" + folder,
-                            "resource_type", "auto"
+                           // "folder", "car-rental/" + folder,
+                            "resource_type", "auto",
+                            "type", "upload"
                     ));
             return (String) uploadResult.get("secure_url");
         } catch (IOException e) {

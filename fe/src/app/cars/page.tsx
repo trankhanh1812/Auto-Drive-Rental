@@ -81,7 +81,7 @@ export default function CarsPage() {
 
     // Filter by seats
     if (filters.minSeats) {
-      filtered = filtered.filter((car) => parseInt(car.seats) >= parseInt(filters.minSeats));
+      filtered = filtered.filter((car) => car.seats >= parseInt(filters.minSeats));
     }
 
     setFilteredCars(filtered);

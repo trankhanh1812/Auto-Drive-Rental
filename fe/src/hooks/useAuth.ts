@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { User } from "@/types";
@@ -35,7 +37,7 @@ export function useAuth() {
     const credentials = isEmail
       ? { email: identifier, username: undefined, password }
       : { email: undefined, username: identifier, password };
-    
+
     const response = await authService.login(credentials);
     setUser(response.user);
     return response;

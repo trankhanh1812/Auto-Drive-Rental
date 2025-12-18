@@ -41,6 +41,8 @@ public class CarDTO {
     private Double averageRating;
     private Integer totalTrips;
     private Boolean approved;
+        private String rejectionReason;
+
     private List<String> images;
     private List<String> features;
     private LocalDateTime createdAt;

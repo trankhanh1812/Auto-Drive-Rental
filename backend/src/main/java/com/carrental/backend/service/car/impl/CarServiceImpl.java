@@ -1,5 +1,13 @@
 package com.carrental.backend.service.car.impl;
 
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.carrental.backend.dto.car.CarDTO;
 import com.carrental.backend.dto.car.CarSearchDTO;
 import com.carrental.backend.entity.Car;
@@ -8,22 +16,12 @@ import com.carrental.backend.entity.User;
 import com.carrental.backend.enums.CarStatus;
 import com.carrental.backend.enums.CarType;
 import com.carrental.backend.exception.ValidParametersException;
-import com.carrental.backend.repository.booking.BookingRepository;
 import com.carrental.backend.repository.car.CarRepository;
 import com.carrental.backend.repository.review.ReviewRepository;
 import com.carrental.backend.request.car.CreateCarRequest;
 import com.carrental.backend.request.car.UpdateCarRequest;
 import com.carrental.backend.service.car.CarService;
 import com.carrental.backend.service.user.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -177,6 +175,8 @@ public class CarServiceImpl implements CarService {
     @Transactional(readOnly = true)
     public List<CarDTO> getAvailableCars() {
         return carRepository.findAllAvailableCars().stream()
+                        .filter(car -> car.getApproved() != null && car.getApproved())
+
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
@@ -206,6 +206,8 @@ public class CarServiceImpl implements CarService {
     @Transactional(readOnly = true)
     public List<CarDTO> getTopRatedCars() {
         return carRepository.findTopRatedCars().stream()
+                        .filter(car -> car.getApproved() != null && car.getApproved())
+
                 .limit(10)
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
@@ -272,6 +274,8 @@ public class CarServiceImpl implements CarService {
                 .averageRating(car.getAverageRating())
                 .totalTrips(car.getTotalTrips())
                 .approved(car.getApproved())
+                                .rejectionReason(car.getRejectionReason())
+
                 .createdAt(car.getCreatedAt())
                 .idUserCreated(car.getIdUserCreated())
                 .build();
@@ -311,7 +315,10 @@ public class CarServiceImpl implements CarService {
         Car car = carRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Car not found"));
         // For now, just delete the car. In future, could implement notification system
-        carRepository.delete(car);
+        car.setApproved(false);
+        car.setRejectionReason(reason);
+        car.setIsAvailable(false);
+        carRepository.save(car);
         // TODO: Send notification to owner with rejection reason
     }
 }

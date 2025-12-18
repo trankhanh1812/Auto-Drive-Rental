@@ -69,6 +69,8 @@ public class Car {
     private Double averageRating = 0.0;
     @Column(nullable = false)
     private Boolean approved = false;
+    @Column(length = 500)
+    private String rejectionReason;
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 

@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useAuth } from '@/hooks/useAuth';
-import { useRouter } from 'next/navigation';
-import { UserRole } from '@/types';
-import { AlertCircle } from 'lucide-react';
-import { useEffect } from 'react';
+import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
+import { UserRole } from "@/types";
+import { AlertCircle } from "lucide-react";
+import { useEffect } from "react";
 
 export default function AdminComplaintsPage() {
   const { user, isAuthenticated } = useAuth();
@@ -12,13 +12,13 @@ export default function AdminComplaintsPage() {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      router.push('/login?redirect=/admin/complaints');
+      router.push("/login?redirect=/admin/complaints");
       return;
     }
 
     if (user && user.role !== UserRole.ADMIN) {
-      alert('Bạn không có quyền truy cập');
-      router.push('/');
+      alert("Bạn không có quyền truy cập");
+      router.push("/");
     }
   }, [isAuthenticated, user]);
 
@@ -38,7 +38,7 @@ export default function AdminComplaintsPage() {
         <div className="bg-white rounded-lg shadow p-12 text-center">
           <AlertCircle className="w-16 h-16 text-gray-300 mx-auto mb-4" />
           <p className="text-gray-500 text-lg">Chưa có khiếu nại nào</p>
-          <p className="text-sm text-gray-400 mt-2">
+          <p className="text-sm text-gray-600 mt-2">
             Chức năng khiếu nại đang được phát triển
           </p>
         </div>

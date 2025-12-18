@@ -70,6 +70,8 @@ export interface Car {
   status: CarStatus;
   isAvailable: boolean;
   averageRating: number;
+  approved?: boolean;
+  rejectionReason?: string;
   totalTrips: number;
   createdAt: string;
 }
@@ -85,7 +87,7 @@ export interface User {
   drivingLicenseImage?: string;
   profilePicture?: string;
   role: UserRole;
-  status?: 'ACTIVE' | 'INACTIVE' | 'BANNED';
+  status?: "ACTIVE" | "INACTIVE" | "BANNED";
   bankName?: string;
   bankAccountNumber?: string;
   bankAccountName?: string;

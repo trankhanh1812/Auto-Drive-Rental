@@ -22,7 +22,6 @@ export default function ProfilePage() {
     address: "",
     email: "",
     drivingLicense: "",
-    drivingLicenseImage: "",
     profilePicture: "",
     bankName: "",
     bankAccountNumber: "",
@@ -47,7 +46,6 @@ export default function ProfilePage() {
         address: data.address || "",
         email: data.email || "",
         drivingLicense: data.drivingLicense || "",
-        drivingLicenseImage: data.drivingLicenseImage || "",
         profilePicture: data.profilePicture || "",
         bankName: data.bankName || "",
         bankAccountNumber: data.bankAccountNumber || "",
@@ -212,8 +210,8 @@ export default function ProfilePage() {
               )}
             </div>
             <p className="text-sm text-gray-500 mt-2">
-              {uploadingAvatar 
-                ? "Đang tải ảnh lên..." 
+              {uploadingAvatar
+                ? "Đang tải ảnh lên..."
                 : "Nhấp vào biểu tượng camera để thay đổi ảnh đại diện"}
             </p>
           </div>
@@ -348,27 +346,53 @@ export default function ProfilePage() {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Giấy phép lái xe
               </label>
-              {profile.drivingLicenseImage && (
-                <div className="mb-3">
-                  <img
-                    src={profile.drivingLicenseImage}
-                    alt="Driving License"
-                    className="max-w-md rounded-lg border"
+              <div className="space-y-3">
+                {uploadingLicense ? (
+                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto mb-2"></div>
+                    <p className="text-sm text-gray-600">Đang tải ảnh lên...</p>
+                  </div>
+                ) : profile.drivingLicense ? (
+                  <div className="space-y-3">
+                    <div className="relative inline-block">
+                      <img
+                        src={profile.drivingLicense}
+                        alt="Giấy phép lái xe"
+                        className="max-w-md w-full rounded-lg border-2 border-gray-200 shadow-sm object-contain bg-gray-50"
+                      />
+                      <div className="absolute top-2 right-2 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                        ✓ Đã tải lên
+                      </div>
+                    </div>
+                    <p className="text-sm text-gray-600">
+                      Nhấp vào nút bên dưới để thay đổi ảnh giấy phép lái xe
+                    </p>
+                  </div>
+                ) : (
+                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+                    <Upload className="w-12 h-12 text-gray-400 mx-auto mb-2" />
+                    <p className="text-sm text-gray-600">
+                      Chưa có ảnh giấy phép lái xe
+                    </p>
+                  </div>
+                )}
+
+                <label className="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg cursor-pointer transition w-fit font-medium">
+                  <Upload className="w-5 h-5" />
+                  <span>
+                    {profile.drivingLicense
+                      ? "Thay đổi ảnh"
+                      : "Tải lên ảnh giấy phép lái xe"}
+                  </span>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleLicenseUpload}
+                    className="hidden"
+                    disabled={uploadingLicense}
                   />
-                </div>
-              )}
-              <label className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg cursor-pointer transition w-fit text-gray-700">
-                <Upload className="w-5 h-5 text-gray-700" />
-                <span className="font-medium">
-                  Tải lên ảnh giấy phép lái xe
-                </span>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleLicenseUpload}
-                  className="hidden"
-                />
-              </label>
+                </label>
+              </div>
             </div>
 
             <div className="flex gap-4">

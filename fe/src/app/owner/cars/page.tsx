@@ -4,7 +4,15 @@ import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { carService } from "@/lib/services/carService";
 import { ownerService } from "@/lib/services/ownerService";
-import { Car as CarIcon, Plus, Edit, Trash2, Eye } from "lucide-react";
+import {
+  Car as CarIcon,
+  Plus,
+  Edit,
+  Trash2,
+  Eye,
+  XCircle,
+  Clock,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import { UserRole, Car } from "@/types";
 import Link from "next/link";
@@ -73,9 +81,7 @@ export default function OwnerCarsPage() {
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Quản Lý Xe</h1>
-            <p className="text-gray-600 mt-2">
-              Danh sách xe cho thuê của bạn
-            </p>
+            <p className="text-gray-600 mt-2">Danh sách xe cho thuê của bạn</p>
           </div>
           <Link
             href="/owner/cars/new"
@@ -156,6 +162,31 @@ export default function OwnerCarsPage() {
                     </div>
                   </div>
 
+                  {/* Approval Status */}
+                  <div className="mb-4">
+                    {car.approved === true ? (
+                      <div className="flex items-center gap-2 text-green-700 bg-green-50 px-3 py-2 rounded-lg text-sm">
+                        <span className="font-semibold">✓ Đã duyệt</span>
+                      </div>
+                    ) : car.approved === false ? (
+                      <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+                        <div className="flex items-center gap-2 text-red-700 mb-2">
+                          <XCircle className="w-4 h-4" />
+                          <span className="font-semibold">Bị từ chối</span>
+                        </div>
+                        {car.rejectionReason && (
+                          <p className="text-sm text-red-600 ml-6">
+                            Lý do: {car.rejectionReason}
+                          </p>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-2 text-yellow-700 bg-yellow-50 px-3 py-2 rounded-lg text-sm">
+                        <Clock className="w-4 h-4" />
+                        <span className="font-semibold">Chờ duyệt</span>
+                      </div>
+                    )}
+                  </div>
                   <div className="flex gap-2">
                     <Link
                       href={`/cars/${car.id}`}

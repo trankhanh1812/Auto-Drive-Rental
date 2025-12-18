@@ -139,26 +139,28 @@ export default function CarDetailsPage() {
                   </button>
                 )}
                 {/* Image thumbnails */}
-                {car.images && car.images.length > 0 && car.images.map((image, index) => (
-                  <button
-                    key={index}
-                    onClick={() => {
-                      setShowVideo(false);
-                      setSelectedImage(index);
-                    }}
-                    className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition ${
-                      !showVideo && selectedImage === index
-                        ? "border-purple-600"
-                        : "border-gray-300 hover:border-purple-400"
-                    }`}
-                  >
-                    <img
-                      src={image}
-                      alt={`${car.name} ${index + 1}`}
-                      className="w-full h-full object-cover"
-                    />
-                  </button>
-                ))}
+                {car.images &&
+                  car.images.length > 0 &&
+                  car.images.map((image, index) => (
+                    <button
+                      key={index}
+                      onClick={() => {
+                        setShowVideo(false);
+                        setSelectedImage(index);
+                      }}
+                      className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition ${
+                        !showVideo && selectedImage === index
+                          ? "border-purple-600"
+                          : "border-gray-300 hover:border-purple-400"
+                      }`}
+                    >
+                      <img
+                        src={image}
+                        alt={`${car.name} ${index + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                    </button>
+                  ))}
               </div>
             </div>
 
@@ -192,7 +194,9 @@ export default function CarDetailsPage() {
                   <Users className="w-6 h-6 text-purple-600" />
                   <div>
                     <p className="text-xs text-gray-500">Số chỗ</p>
-                    <p className="font-semibold text-gray-900">{car.seats} chỗ</p>
+                    <p className="font-semibold text-gray-900">
+                      {car.seats} chỗ
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
@@ -208,7 +212,9 @@ export default function CarDetailsPage() {
                   <Fuel className="w-6 h-6 text-purple-600" />
                   <div>
                     <p className="text-xs text-gray-500">Nhiên liệu</p>
-                    <p className="font-semibold text-gray-900">{car.fuelType}</p>
+                    <p className="font-semibold text-gray-900">
+                      {car.fuelType}
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
@@ -224,11 +230,10 @@ export default function CarDetailsPage() {
 
               {/* Description */}
               <div className="mt-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
-                  Mô tả
-                </h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">Mô tả</h3>
                 <p className="text-gray-700 leading-relaxed">
-                  {car.description || "Xe trong tình trạng tốt, sạch sẽ, bảo dưỡng định kỳ."}
+                  {car.description ||
+                    "Xe trong tình trạng tốt, sạch sẽ, bảo dưỡng định kỳ."}
                 </p>
               </div>
 
@@ -282,7 +287,7 @@ export default function CarDetailsPage() {
 
               {car.isAvailable && (
                 <>
-                  <button 
+                  <button
                     onClick={() => router.push(`/cars/${car.id}/book`)}
                     className="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 transition mb-4"
                   >
@@ -299,7 +304,7 @@ export default function CarDetailsPage() {
               {!car.isAvailable && (
                 <div className="text-center py-4 text-gray-500">
                   <p className="font-medium">Xe hiện không khả dụng</p>
-                  <p className="text-sm">Vui lòng chọn xe khác</p>
+                  <p className="text-sm text-gray-600">Vui lòng chọn xe khác</p>
                 </div>
               )}
             </div>

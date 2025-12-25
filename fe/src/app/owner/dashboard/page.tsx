@@ -160,6 +160,12 @@ export default function OwnerDashboardPage() {
                 <DollarSign className="w-8 h-8 text-purple-600" />
               </div>
             </div>
+            <Link
+              href="/owner/analytics"
+              className="text-purple-600 text-sm font-medium mt-3 inline-block hover:underline"
+            >
+              Xem chi tiết →
+            </Link>
           </div>
 
           <div className="bg-white rounded-lg shadow p-6">

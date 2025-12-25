@@ -46,7 +46,7 @@ public class Car {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TransmissionType transmission;
-    @Column(nullable = false)
+    @Column(nullable = false, length = 20)
     @Enumerated(EnumType.STRING)
     private FuelType fuelType;
     @Column(nullable = false, precision = 10, scale = 2)

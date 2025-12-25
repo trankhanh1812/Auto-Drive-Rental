@@ -1,11 +1,13 @@
 package com.carrental.backend.controller;
 
+import com.carrental.backend.dto.analytics.RevenueAnalyticsDTO;
 import com.carrental.backend.dto.ApiResponse;
 import com.carrental.backend.dto.booking.BookingDTO;
 import com.carrental.backend.dto.car.CarDTO;
 import com.carrental.backend.entity.User;
 import com.carrental.backend.enums.BookingStatus;
 import com.carrental.backend.enums.UserRole;
+import com.carrental.backend.service.analytics.AnalyticsService;
 import com.carrental.backend.service.booking.BookingService;
 import com.carrental.backend.service.car.CarService;
 import com.carrental.backend.service.user.UserService;
@@ -31,6 +33,8 @@ public class OwnerController {
     private CarService carService;
     @Autowired
     private BookingService bookingService;
+    @Autowired
+    private AnalyticsService analyticsService;
 
     @GetMapping("/cars")
     @PreAuthorize("hasAuthority('OWNER')")
@@ -145,4 +149,18 @@ public class OwnerController {
         BookingDTO booking = bookingService.completeBooking(id);
         return ResponseEntity.ok(ApiResponse.success("Booking completed - car returned", booking));
     }
-}
+    @GetMapping("/analytics")
+    @PreAuthorize("hasAuthority('OWNER')")
+    public ResponseEntity<ApiResponse<RevenueAnalyticsDTO>> getAnalytics(
+            @RequestParam(required = false) Integer year
+    ) {
+        User currentUser = userService.getCurrentUser();
+        
+        if (currentUser.getRole() != UserRole.OWNER) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(ApiResponse.error("Access denied. Owner role required"));
+        }
+        
+        RevenueAnalyticsDTO analytics = analyticsService.getOwnerAnalytics(currentUser.getId(), year);
+        return ResponseEntity.ok(ApiResponse.success("Analytics retrieved successfully", analytics));
+    }}

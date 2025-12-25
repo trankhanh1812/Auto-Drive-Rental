@@ -99,8 +99,8 @@ export default function EditCarPage() {
       return;
     }
 
-    if (file.size > 50 * 1024 * 1024) {
-      setError("Kích thước video không được vượt quá 50MB");
+    if (file.size > 10 * 1024 * 1024) {
+      setError("Kích thước video không được vượt quá 10MB");
       return;
     }
 

@@ -22,4 +22,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long>, ReviewRep
     List<Review> findByCarOrderByCreatedAtDesc(Car car, Pageable pageable);
 
     Optional<Review> findByUserAndCar(User user, Car car);
+    
+    List<Review> findByCarIdIn(List<Long> carIds);
 }

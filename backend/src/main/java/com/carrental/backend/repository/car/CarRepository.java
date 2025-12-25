@@ -28,6 +28,8 @@ public interface CarRepository extends JpaRepository<Car, Long>, CarRepositoryCu
     List<Car> findByPricePerDayBetween(BigDecimal minPrice, BigDecimal maxPrice);
 
     List<Car> findByIdUserCreated(Long ownerId);
+    
+    List<Car> findByCreatedByUserId(Long ownerId);
 
     Long countByIdUserCreated(Long ownerId);
 

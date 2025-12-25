@@ -89,9 +89,9 @@ export default function NewCarPage() {
       return;
     }
 
-    // Validate file size (max 50MB)
-    if (file.size > 50 * 1024 * 1024) {
-      setError("Kích thước video không được vượt quá 50MB");
+    // Validate file size (max 10MB for Cloudinary free tier)
+    if (file.size > 10 * 1024 * 1024) {
+      setError("Kích thước video không được vượt quá 10MB");
       return;
     }
 

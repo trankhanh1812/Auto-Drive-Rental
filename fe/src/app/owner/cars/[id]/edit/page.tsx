@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { ownerService } from "@/lib/services/ownerService";
+import { fileService } from "@/lib/services/fileService";
 import { useRouter, useParams } from "next/navigation";
 import { UserRole, Car, CarType, TransmissionType, FuelType, CarStatus } from "@/types";
 import { CarIcon, Upload, X, Plus } from "lucide-react";
@@ -107,25 +108,10 @@ export default function EditCarPage() {
     setError("");
 
     try {
-      const formData = new FormData();
-      formData.append("file", file);
-
-      const response = await fetch("http://localhost:8080/api/files/upload?folder=videos", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: formData,
-      });
-
-      const data = await response.json();
-      if (data.success) {
-        setVideoUrl(data.data);
-      } else {
-        setError("Tải video thất bại");
-      }
-    } catch (err) {
-      setError("Tải video thất bại");
+      const url = await fileService.uploadVideo(file);
+      setVideoUrl(url);
+    } catch (err: any) {
+      setError(err.response?.data?.message || "Tải video thất bại");
       console.error("Upload video error:", err);
     } finally {
       setUploadingVideo(false);

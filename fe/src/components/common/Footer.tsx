@@ -63,7 +63,7 @@ export default function Footer() {
             <ul className="space-y-3 text-gray-400">
               <li className="flex items-center space-x-2">
                 <Phone className="w-5 h-5" />
-                <span>1900 xxxx</span>
+                <span>1900 1010</span>
               </li>
               <li className="flex items-center space-x-2">
                 <Mail className="w-5 h-5" />

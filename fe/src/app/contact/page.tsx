@@ -1,30 +1,34 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { 
-  Mail, 
-  Phone, 
-  MapPin, 
-  Clock, 
+import { useState } from "react";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Clock,
   Send,
   MessageCircle,
   Facebook,
   Instagram,
-  Twitter
-} from 'lucide-react';
+  Twitter,
+} from "lucide-react";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: '',
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
   });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -34,18 +38,18 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    
+
     // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+
     setLoading(false);
     setSubmitted(true);
     setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      subject: '',
-      message: '',
+      name: "",
+      email: "",
+      phone: "",
+      subject: "",
+      message: "",
     });
 
     // Reset success message after 5 seconds
@@ -55,34 +59,49 @@ export default function ContactPage() {
   const contactInfo = [
     {
       icon: Phone,
-      title: 'Hotline',
-      details: ['1900 xxxx', '024 xxxx xxxx'],
-      description: 'Hỗ trợ 24/7',
+      title: "Hotline",
+      details: ["1900 1010", "024 1812 0802"],
+      description: "Hỗ trợ 24/7",
     },
     {
       icon: Mail,
-      title: 'Email',
-      details: ['info@autodrive.vn', 'support@autodrive.vn'],
-      description: 'Phản hồi trong 24h',
+      title: "Email",
+      details: ["info@autodrive.vn", "support@autodrive.vn"],
+      description: "Phản hồi trong 24h",
     },
     {
       icon: MapPin,
-      title: 'Địa chỉ',
-      details: ['123 Đường ABC, Quận XYZ', 'Hà Nội, Việt Nam'],
-      description: 'Ghé thăm văn phòng',
+      title: "Địa chỉ",
+      details: ["04 Đường Vào Tim Em, Phường Lợn Hư", "Hà Nội, Việt Nam"],
+      description: "Ghé thăm văn phòng",
     },
     {
       icon: Clock,
-      title: 'Giờ làm việc',
-      details: ['Thứ 2 - Thứ 6: 8:00 - 18:00', 'Thứ 7 - CN: 9:00 - 17:00'],
-      description: 'Luôn sẵn sàng phục vụ',
+      title: "Giờ làm việc",
+      details: ["Thứ 2 - Thứ 6: 8:00 - 18:00", "Thứ 7 - CN: 9:00 - 17:00"],
+      description: "Luôn sẵn sàng phục vụ",
     },
   ];
 
   const socialLinks = [
-    { icon: Facebook, name: 'Facebook', href: '#', color: 'bg-blue-600 hover:bg-blue-700' },
-    { icon: Instagram, name: 'Instagram', href: '#', color: 'bg-pink-600 hover:bg-pink-700' },
-    { icon: Twitter, name: 'Twitter', href: '#', color: 'bg-sky-500 hover:bg-sky-600' },
+    {
+      icon: Facebook,
+      name: "Facebook",
+      href: "#",
+      color: "bg-blue-600 hover:bg-blue-700",
+    },
+    {
+      icon: Instagram,
+      name: "Instagram",
+      href: "#",
+      color: "bg-pink-600 hover:bg-pink-700",
+    },
+    {
+      icon: Twitter,
+      name: "Twitter",
+      href: "#",
+      color: "bg-sky-500 hover:bg-sky-600",
+    },
   ];
 
   return (
@@ -94,8 +113,8 @@ export default function ContactPage() {
             <MessageCircle className="w-16 h-16 mx-auto mb-6" />
             <h1 className="text-5xl font-bold mb-6">Liên hệ với chúng tôi</h1>
             <p className="text-xl text-purple-100 leading-relaxed">
-              Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn. 
-              Hãy để lại thông tin hoặc liên hệ trực tiếp với chúng tôi
+              Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn. Hãy để lại thông
+              tin hoặc liên hệ trực tiếp với chúng tôi
             </p>
           </div>
         </div>
@@ -113,7 +132,9 @@ export default function ContactPage() {
                 <div className="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center mb-4">
                   <info.icon className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">{info.title}</h3>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">
+                  {info.title}
+                </h3>
                 {info.details.map((detail, idx) => (
                   <p key={idx} className="text-gray-700 font-medium mb-1">
                     {detail}
@@ -142,13 +163,19 @@ export default function ContactPage() {
               {submitted && (
                 <div className="mb-6 bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg flex items-center gap-2">
                   <Send className="w-5 h-5" />
-                  <span>Cảm ơn bạn! Chúng tôi đã nhận được tin nhắn và sẽ phản hồi sớm.</span>
+                  <span>
+                    Cảm ơn bạn! Chúng tôi đã nhận được tin nhắn và sẽ phản hồi
+                    sớm.
+                  </span>
                 </div>
               )}
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
                     Họ và tên <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -165,7 +192,10 @@ export default function ContactPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
                       Email <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -181,7 +211,10 @@ export default function ContactPage() {
                   </div>
 
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label
+                      htmlFor="phone"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
                       Số điện thoại
                     </label>
                     <input
@@ -197,7 +230,10 @@ export default function ContactPage() {
                 </div>
 
                 <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label
+                    htmlFor="subject"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
                     Chủ đề <span className="text-red-500">*</span>
                   </label>
                   <select
@@ -218,7 +254,10 @@ export default function ContactPage() {
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label
+                    htmlFor="message"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
                     Nội dung <span className="text-red-500">*</span>
                   </label>
                   <textarea
@@ -335,14 +374,15 @@ export default function ContactPage() {
               Cần hỗ trợ khẩn cấp?
             </h3>
             <p className="text-gray-700 mb-6">
-              Nếu bạn đang gặp sự cố khẩn cấp trong quá trình sử dụng xe, vui lòng liên hệ ngay:
+              Nếu bạn đang gặp sự cố khẩn cấp trong quá trình sử dụng xe, vui
+              lòng liên hệ ngay:
             </p>
             <a
               href="tel:1900xxxx"
               className="inline-flex items-center gap-3 bg-red-600 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-red-700 transition"
             >
               <Phone className="w-6 h-6" />
-              Hotline khẩn cấp: 1900 xxxx
+              Hotline khẩn cấp: 1900 1010
             </a>
           </div>
         </div>

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { carService } from "@/lib/services/carService";
+import { fileService } from "@/lib/services/fileService";
 import { CarType, TransmissionType, FuelType, CarStatus } from "@/types";
 import { Car, Upload, Save, X, Plus } from "lucide-react";
 
@@ -44,43 +45,29 @@ export default function NewCarPage() {
     setError("");
 
     try {
-      const uploadPromises = Array.from(files).map(async (file) => {
+      const validFiles = Array.from(files).filter(file => {
         // Validate file type
         if (!file.type.startsWith("image/")) {
-          throw new Error("Vui lòng chỉ chọn file hình ảnh");
+          setError("Vui lòng chỉ chọn file hình ảnh");
+          return false;
         }
 
         // Validate file size (max 5MB)
         if (file.size > 5 * 1024 * 1024) {
-          throw new Error("Kích thước hình ảnh không được vượt quá 5MB");
+          setError("Kích thước hình ảnh không được vượt quá 5MB");
+          return false;
         }
-
-        const formData = new FormData();
-        formData.append("file", file);
-
-        const response = await fetch(
-          "http://localhost:8080/api/files/upload?folder=cars",
-          {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-            body: formData,
-          }
-        );
-
-        const data = await response.json();
-        if (data.success) {
-          return data.data;
-        } else {
-          throw new Error("Tải hình ảnh thất bại");
-        }
+        return true;
       });
 
-      const uploadedUrls = await Promise.all(uploadPromises);
+      if (validFiles.length === 0) {
+        return;
+      }
+
+      const uploadedUrls = await fileService.uploadImages(validFiles);
       setImageUrls([...imageUrls, ...uploadedUrls]);
     } catch (err: any) {
-      setError(err.message || "Tải hình ảnh thất bại");
+      setError(err.response?.data?.message || "Tải hình ảnh thất bại");
     } finally {
       setUploadingImages(false);
       // Reset input
@@ -112,25 +99,15 @@ export default function NewCarPage() {
     setError("");
 
     try {
-      const formData = new FormData();
-      formData.append("file", file);
-
-      const response = await fetch("http://localhost:8080/api/files/upload?folder=videos", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: formData,
-      });
-
-      const data = await response.json();
-      if (data.success) {
-        setVideoUrl(data.data);
-      } else {
-        setError("Tải video thất bại");
-      }
-    } catch (err) {
-      setError("Tải video thất bại");
+      const url = await fileService.uploadVideo(file);
+      setVideoUrl(url);
+    } catch (err: any) {
+      setError(err.response?.data?.message || "Tải video thất bại");
+      console.error("Upload video error:", err);
+    } finally {
+      setUploadingVideo(false);
+    }
+  };
       console.error("Upload video error:", err);
     } finally {
       setUploadingVideo(false);

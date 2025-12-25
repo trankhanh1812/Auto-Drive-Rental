@@ -108,11 +108,6 @@ export default function NewCarPage() {
       setUploadingVideo(false);
     }
   };
-      console.error("Upload video error:", err);
-    } finally {
-      setUploadingVideo(false);
-    }
-  };
 
   const handleRemoveVideo = () => {
     setVideoUrl("");

@@ -1,8 +1,9 @@
 'use client';
 
 import { User, UserRole } from '@/types';
-import { X, User as UserIcon, Mail, Phone, MapPin, CreditCard, Calendar, Shield } from 'lucide-react';
+import { X, User as UserIcon, Mail, Phone, MapPin, CreditCard, Calendar, Shield, ExternalLink } from 'lucide-react';
 import Image from 'next/image';
+import { useState } from 'react';
 
 interface UserDetailModalProps {
   user: User;
@@ -10,6 +11,8 @@ interface UserDetailModalProps {
 }
 
 export default function UserDetailModal({ user, onClose }: UserDetailModalProps) {
+  const [showAllDetails, setShowAllDetails] = useState(false);
+
   const getRoleText = (role: UserRole) => {
     switch (role) {
       case UserRole.ADMIN: return 'Quản trị viên';
@@ -168,6 +171,165 @@ export default function UserDetailModal({ user, onClose }: UserDetailModalProps)
             </div>
           )}
         </div>
+
+        {/* Advanced Details Section */}
+        {!showAllDetails && (
+          <div className="border-t pt-4">
+            <button
+              onClick={() => setShowAllDetails(true)}
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-purple-50 text-purple-600 rounded-lg hover:bg-purple-100 transition font-medium"
+            >
+              <ExternalLink className="w-5 h-5" />
+              Xem tất cả thông tin chi tiết
+            </button>
+          </div>
+        )}
+
+        {/* All Details - Extended View */}
+        {showAllDetails && (
+          <div className="border-t pt-6 space-y-6">
+            <div className="flex items-center justify-between mb-4">
+              <h4 className="text-lg font-semibold text-gray-900">Thông tin đầy đủ</h4>
+              <button
+                onClick={() => setShowAllDetails(false)}
+                className="text-sm text-purple-600 hover:text-purple-700 font-medium"
+              >
+                Thu gọn
+              </button>
+            </div>
+
+            {/* Account Details */}
+            <div className="bg-blue-50 rounded-lg p-4 space-y-3">
+              <h5 className="font-semibold text-gray-900 text-sm uppercase tracking-wide">Thông tin tài khoản</h5>
+              <div className="grid grid-cols-2 gap-4 text-sm">
+                <div>
+                  <p className="text-gray-500">User ID</p>
+                  <p className="text-gray-900 font-mono">#{user.id}</p>
+                </div>
+                <div>
+                  <p className="text-gray-500">Username</p>
+                  <p className="text-gray-900 font-medium">{user.username || 'Chưa có'}</p>
+                </div>
+                <div>
+                  <p className="text-gray-500">Trạng thái</p>
+                  <p className="text-gray-900 font-medium">{user.status || 'ACTIVE'}</p>
+                </div>
+                <div>
+                  <p className="text-gray-500">Vai trò</p>
+                  <p className="text-gray-900 font-medium">{getRoleText(user.role)}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Driving License Info */}
+            {user.drivingLicense && (
+              <div className="bg-green-50 rounded-lg p-4 space-y-3">
+                <h5 className="font-semibold text-gray-900 text-sm uppercase tracking-wide">Giấy phép lái xe</h5>
+                <div className="text-sm">
+                  <p className="text-gray-500">Số giấy phép</p>
+                  <p className="text-gray-900 font-mono text-lg">{user.drivingLicense}</p>
+                </div>
+              </div>
+            )}
+
+            {/* Complete Contact Info */}
+            <div className="bg-purple-50 rounded-lg p-4 space-y-3">
+              <h5 className="font-semibold text-gray-900 text-sm uppercase tracking-wide">Liên hệ đầy đủ</h5>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Email:</span>
+                  <span className="text-gray-900 font-medium">{user.email}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Số điện thoại:</span>
+                  <span className="text-gray-900 font-medium">{user.phoneNumber || 'Chưa cập nhật'}</span>
+                </div>
+                {user.address && (
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Địa chỉ:</span>
+                    <span className="text-gray-900 font-medium text-right max-w-xs">{user.address}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Banking Details - Full View */}
+            {user.role === UserRole.OWNER && (user.bankName || user.bankAccountNumber || user.bankAccountName) && (
+              <div className="bg-yellow-50 rounded-lg p-4 space-y-3">
+                <h5 className="font-semibold text-gray-900 text-sm uppercase tracking-wide flex items-center gap-2">
+                  <CreditCard className="w-4 h-4" />
+                  Thông tin thanh toán
+                </h5>
+                <div className="space-y-2 text-sm">
+                  {user.bankName && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">Ngân hàng:</span>
+                      <span className="text-gray-900 font-medium">{user.bankName}</span>
+                    </div>
+                  )}
+                  {user.bankAccountNumber && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">Số tài khoản:</span>
+                      <span className="text-gray-900 font-mono font-medium">{user.bankAccountNumber}</span>
+                    </div>
+                  )}
+                  {user.bankAccountName && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">Tên tài khoản:</span>
+                      <span className="text-gray-900 font-medium">{user.bankAccountName}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Metadata */}
+            <div className="bg-gray-50 rounded-lg p-4 space-y-3">
+              <h5 className="font-semibold text-gray-900 text-sm uppercase tracking-wide">Dữ liệu hệ thống</h5>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Ngày tạo:</span>
+                  <span className="text-gray-900 font-medium">
+                    {new Date(user.createdAt).toLocaleString('vi-VN', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit'
+                    })}
+                  </span>
+                </div>
+                {user.profilePicture && (
+                  <div className="flex justify-between items-start">
+                    <span className="text-gray-500">URL ảnh đại diện:</span>
+                    <a 
+                      href={user.profilePicture} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:text-blue-700 text-xs break-all max-w-xs text-right"
+                    >
+                      {user.profilePicture.substring(0, 50)}...
+                    </a>
+                  </div>
+                )}
+                {user.drivingLicenseImage && (
+                  <div className="flex justify-between items-start">
+                    <span className="text-gray-500">URL giấy phép:</span>
+                    <a 
+                      href={user.drivingLicenseImage} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:text-blue-700 text-xs break-all max-w-xs text-right"
+                    >
+                      {user.drivingLicenseImage.substring(0, 50)}...
+                    </a>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
 
         {/* Footer */}
         <div className="sticky bottom-0 bg-gray-50 border-t px-6 py-4">

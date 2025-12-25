@@ -38,7 +38,7 @@ public class User implements UserDetails {
     @Column(nullable = false, unique = true)
     private String phoneNumber;
 
-    @Column(nullable = false)
+
     private Boolean banned = false;
     private String address;
     private String idUserCreated;

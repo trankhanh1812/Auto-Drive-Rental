@@ -3,6 +3,12 @@ export enum CarType {
   SUV = "SUV",
   HATCHBACK = "HATCHBACK",
   COUPE = "COUPE",
+  MPV = "MPV",
+  PICKUP = "PICKUP",
+  VAN = "VAN",
+  SPORTS = "SPORTS",
+  LUXURY = "LUXURY",
+  CROSSOVER = "CROSSOVER",
 }
 
 export enum TransmissionType {
@@ -11,6 +17,7 @@ export enum TransmissionType {
 }
 // dua ve lai viet hao nhe
 export enum FuelType {
+  PETROL = "PETROL",
   GASOLINE = "GASOLINE",
   DIESEL = "DIESEL",
   ELECTRIC = "ELECTRIC",

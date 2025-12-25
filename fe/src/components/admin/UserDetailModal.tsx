@@ -174,7 +174,7 @@ export default function UserDetailModal({ user, onClose }: UserDetailModalProps)
 
         {/* Advanced Details Section */}
         {!showAllDetails && (
-          <div className="border-t pt-4">
+          <div className="border-t pt-4 px-6 pb-4">
             <button
               onClick={() => setShowAllDetails(true)}
               className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-purple-50 text-purple-600 rounded-lg hover:bg-purple-100 transition font-medium"
@@ -187,7 +187,7 @@ export default function UserDetailModal({ user, onClose }: UserDetailModalProps)
 
         {/* All Details - Extended View */}
         {showAllDetails && (
-          <div className="border-t pt-6 space-y-6">
+          <div className="border-t pt-6 space-y-6 px-6 pb-6">
             <div className="flex items-center justify-between mb-4">
               <h4 className="text-lg font-semibold text-gray-900">Thông tin đầy đủ</h4>
               <button
@@ -329,7 +329,6 @@ export default function UserDetailModal({ user, onClose }: UserDetailModalProps)
             </div>
           </div>
         )}
-      </div>
 
         {/* Footer */}
         <div className="sticky bottom-0 bg-gray-50 border-t px-6 py-4">

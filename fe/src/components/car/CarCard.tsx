@@ -53,7 +53,7 @@ export default function CarCard({ car }: { car: Car }) {
             <span className="text-sm font-semibold">
               {car.rating.toFixed(1)}
             </span>
-            <span className="text-xs text-gray-500">({car.ratingCount})</span>
+            <span className="text-xs text-gray-600 font-medium">({car.ratingCount})</span>
           </div>
         </div>
 
@@ -63,7 +63,7 @@ export default function CarCard({ car }: { car: Car }) {
             {car.brand} {car.model} {car.year}
           </h3>
 
-          <div className="flex items-center text-sm text-gray-600 mb-3">
+          <div className="flex items-center text-sm text-gray-700 mb-3 font-medium">
             <MapPinIcon className="w-4 h-4 mr-1" />
             <span className="truncate">{car.locationAddress}</span>
           </div>
@@ -92,7 +92,7 @@ export default function CarCard({ car }: { car: Car }) {
               <p className="text-2xl font-bold text-blue-600">
                 {formatPrice(car.pricePerDay)}
               </p>
-              <p className="text-xs text-gray-500">/ ngày</p>
+              <p className="text-xs text-gray-600 font-medium">/ ngày</p>
             </div>
             <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
               Thuê ngay

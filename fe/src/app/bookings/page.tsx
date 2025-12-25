@@ -167,7 +167,7 @@ export default function MyBookingsPage() {
           {filteredBookings.length === 0 ? (
             <div className="text-center py-12">
               <Car className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <p className="text-gray-500 text-lg">
+              <p className="text-gray-600 text-lg font-medium">
                 {filter === "ALL"
                   ? "Bạn chưa có đơn đặt xe nào"
                   : "Không có đơn đặt xe nào"}
@@ -202,7 +202,7 @@ export default function MyBookingsPage() {
                           {booking.carBrand} {booking.carModel}
                           {booking.carLicensePlate && ` - ${booking.carLicensePlate}`}
                         </p>
-                        <p className="text-xs text-gray-500 mt-1">
+                        <p className="text-xs text-gray-600 mt-1 font-medium">
                           Mã đơn: {booking.bookingCode}
                         </p>
                       </div>
@@ -218,27 +218,27 @@ export default function MyBookingsPage() {
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                     <div className="flex items-start gap-2">
-                      <Calendar className="w-4 h-4 text-gray-400 mt-1" />
+                      <Calendar className="w-4 h-4 text-gray-500 mt-1" />
                       <div>
-                        <p className="text-xs text-gray-500">Từ</p>
+                        <p className="text-xs text-gray-600 font-medium">Từ</p>
                         <p className="text-sm font-medium text-gray-900">
                           {new Date(booking.startDate).toLocaleString("vi-VN")}
                         </p>
                       </div>
                     </div>
                     <div className="flex items-start gap-2">
-                      <Calendar className="w-4 h-4 text-gray-400 mt-1" />
+                      <Calendar className="w-4 h-4 text-gray-500 mt-1" />
                       <div>
-                        <p className="text-xs text-gray-500">Đến</p>
+                        <p className="text-xs text-gray-600 font-medium">Đến</p>
                         <p className="text-sm font-medium text-gray-900">
                           {new Date(booking.endDate).toLocaleString("vi-VN")}
                         </p>
                       </div>
                     </div>
                     <div className="flex items-start gap-2">
-                      <Clock className="w-4 h-4 text-gray-400 mt-1" />
+                      <Clock className="w-4 h-4 text-gray-500 mt-1" />
                       <div>
-                        <p className="text-xs text-gray-500">Số ngày</p>
+                        <p className="text-xs text-gray-600 font-medium">Số ngày</p>
                         <p className="text-sm font-medium text-gray-900">
                           {booking.totalDays} ngày
                         </p>
@@ -248,9 +248,9 @@ export default function MyBookingsPage() {
 
                   {booking.pickupLocation && (
                     <div className="flex items-start gap-2 mb-3">
-                      <MapPin className="w-4 h-4 text-gray-400 mt-1" />
+                      <MapPin className="w-4 h-4 text-gray-500 mt-1" />
                       <div>
-                        <p className="text-xs text-gray-500">Địa điểm nhận xe</p>
+                        <p className="text-xs text-gray-600 font-medium">Địa điểm nhận xe</p>
                         <p className="text-sm text-gray-700">{booking.pickupLocation}</p>
                       </div>
                     </div>
@@ -333,7 +333,7 @@ export default function MyBookingsPage() {
               <h2 className="text-lg font-semibold">Đánh giá xe</h2>
               <button
                 onClick={() => setSelectedBookingForReview(null)}
-                className="text-gray-500 hover:text-gray-700 text-2xl"
+                className="text-gray-600 hover:text-gray-900 text-2xl"
               >
                 ×
               </button>

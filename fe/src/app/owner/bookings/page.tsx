@@ -179,7 +179,7 @@ export default function OwnerBookingsPage() {
 
           {/* Bookings List */}
           {filteredBookings.length === 0 ? (
-            <div className="text-center py-12 text-gray-500">
+            <div className="text-center py-12 text-gray-600">
               Không có đơn đặt xe nào
             </div>
           ) : (

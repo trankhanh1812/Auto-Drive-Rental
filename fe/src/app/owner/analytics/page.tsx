@@ -173,7 +173,7 @@ export default function AnalyticsPage() {
             <Calendar className="w-8 h-8 text-blue-500 mb-4" />
             <p className="text-sm text-gray-600 mb-1">Tổng booking</p>
             <p className="text-2xl font-bold text-gray-900">{overview.totalBookings}</p>
-            <p className="text-sm text-gray-500 mt-2">Trong năm {selectedYear}</p>
+            <p className="text-sm text-gray-700 mt-2 font-medium">Trong năm {selectedYear}</p>
           </div>
 
           <div className="bg-white rounded-lg shadow p-6">
@@ -182,7 +182,7 @@ export default function AnalyticsPage() {
             <p className="text-2xl font-bold text-gray-900">
               {ratingAnalysis.averageRating.toFixed(1)}/5.0
             </p>
-            <p className="text-sm text-gray-500 mt-2">Từ tất cả đánh giá</p>
+            <p className="text-sm text-gray-700 mt-2 font-medium">Từ tất cả đánh giá</p>
           </div>
 
           <div className="bg-white rounded-lg shadow p-6">
@@ -191,7 +191,7 @@ export default function AnalyticsPage() {
             <p className="text-2xl font-bold text-gray-900">
               {customerDemographics.totalUniqueCustomers}
             </p>
-            <p className="text-sm text-gray-500 mt-2">
+            <p className="text-sm text-gray-700 mt-2 font-medium">
               {customerDemographics.returningCustomers} khách quay lại
             </p>
           </div>
@@ -413,16 +413,16 @@ export default function AnalyticsPage() {
                     <table className="min-w-full divide-y divide-gray-200">
                       <thead className="bg-gray-50">
                         <tr>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
                             #
                           </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
                             Khách hàng
                           </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
                             Số booking
                           </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
                             Tổng chi tiêu
                           </th>
                         </tr>
@@ -430,7 +430,7 @@ export default function AnalyticsPage() {
                       <tbody className="bg-white divide-y divide-gray-200">
                         {customerDemographics.topCustomers.map((customer, index) => (
                           <tr key={customer.userId} className="hover:bg-gray-50">
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 font-medium">
                               {index + 1}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
@@ -438,7 +438,7 @@ export default function AnalyticsPage() {
                                 {customer.fullName}
                               </div>
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 font-medium">
                               {customer.bookingCount} lần
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-green-600">

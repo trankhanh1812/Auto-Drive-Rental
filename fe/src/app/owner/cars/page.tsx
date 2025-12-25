@@ -101,7 +101,7 @@ export default function OwnerCarsPage() {
         {/* Cars Grid */}
         {cars.length === 0 ? (
           <div className="bg-white rounded-lg shadow p-12 text-center">
-            <CarIcon className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+            <CarIcon className="w-16 h-16 text-gray-500 mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-gray-900 mb-2">
               Chưa có xe nào
             </h3>

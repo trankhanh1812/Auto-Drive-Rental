@@ -18,12 +18,14 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import ReviewList from "@/components/booking/ReviewList";
+import CarCalendar from "@/components/car/CarCalendar";
 
 export default function CarDetailsPage() {
   const params = useParams();
   const router = useRouter();
   const [car, setCar] = useState<Car | null>(null);
   const [reviews, setReviews] = useState<Review[]>([]);
+  const [bookedDates, setBookedDates] = useState<{ startDate: string; endDate: string; status: string }[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [selectedImage, setSelectedImage] = useState(0);
@@ -33,6 +35,7 @@ export default function CarDetailsPage() {
     if (params.id) {
       loadCarDetails();
       loadReviews();
+      loadBookedDates();
     }
   }, [params.id]);
 
@@ -54,6 +57,15 @@ export default function CarDetailsPage() {
       setReviews(data);
     } catch (err) {
       console.error("Failed to load reviews:", err);
+    }
+  };
+
+  const loadBookedDates = async () => {
+    try {
+      const data = await carService.getCarBookedDates(Number(params.id));
+      setBookedDates(data);
+    } catch (err) {
+      console.error("Failed to load booked dates:", err);
     }
   };
 
@@ -261,6 +273,17 @@ export default function CarDetailsPage() {
                 </h3>
                 <ReviewList reviews={reviews} />
               </div>
+            </div>
+
+            {/* Calendar Section */}
+            <div className="mt-6">
+              <CarCalendar 
+                carId={Number(params.id)} 
+                bookedDates={bookedDates}
+                onDateSelect={(start, end) => {
+                  console.log('Selected dates:', start, end);
+                }}
+              />
             </div>
           </div>
 

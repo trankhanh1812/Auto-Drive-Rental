@@ -8,6 +8,7 @@ import com.carrental.backend.request.car.CreateCarRequest;
 import com.carrental.backend.request.car.UpdateCarRequest;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CarService {
     Car createCar(CreateCarRequest request);
@@ -28,4 +29,5 @@ public interface CarService {
     List<CarDTO> getPendingCars();
     CarDTO approveCar(Long id);
     void rejectCar(Long id, String reason);
+    List<Map<String, Object>> getCarBookedDates(Long carId);
 }

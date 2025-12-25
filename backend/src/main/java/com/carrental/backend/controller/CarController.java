@@ -14,7 +14,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/cars")
@@ -74,5 +76,11 @@ public class CarController {
     public ResponseEntity<ApiResponse<Void>> deleteCar(@PathVariable Long id) {
         carService.deleteCar(id);
         return ResponseEntity.ok(ApiResponse.success("Car deleted successfully", null));
+    }
+
+    @GetMapping("/{id}/booked-dates")
+    public ResponseEntity<ApiResponse<List<Map<String, Object>>>> getCarBookedDates(@PathVariable Long id) {
+        List<Map<String, Object>> bookedDates = carService.getCarBookedDates(id);
+        return ResponseEntity.ok(ApiResponse.success("Car booked dates retrieved successfully", bookedDates));
     }
 }

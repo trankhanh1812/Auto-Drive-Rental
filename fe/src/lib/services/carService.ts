@@ -61,4 +61,11 @@ export const carService = {
   deleteCar: async (id: number): Promise<void> => {
     await api.delete(`/cars/${id}`);
   },
+
+  getCarBookedDates: async (id: number): Promise<{ startDate: string; endDate: string; status: string }[]> => {
+    const response = await api.get<ApiResponse<{ startDate: string; endDate: string; status: string }[]>>(
+      `/cars/${id}/booked-dates`
+    );
+    return response.data.data;
+  },
 };

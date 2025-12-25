@@ -1,7 +1,9 @@
 package com.carrental.backend.service.car.impl;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +12,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.carrental.backend.dto.car.CarDTO;
 import com.carrental.backend.dto.car.CarSearchDTO;
+import com.carrental.backend.entity.Booking;
 import com.carrental.backend.entity.Car;
 import com.carrental.backend.entity.Review;
 import com.carrental.backend.entity.User;
+import com.carrental.backend.enums.BookingStatus;
 import com.carrental.backend.enums.CarStatus;
 import com.carrental.backend.enums.CarType;
 import com.carrental.backend.exception.ValidParametersException;
+import com.carrental.backend.repository.booking.BookingRepository;
 import com.carrental.backend.repository.car.CarRepository;
 import com.carrental.backend.repository.review.ReviewRepository;
 import com.carrental.backend.request.car.CreateCarRequest;
@@ -32,6 +37,8 @@ public class CarServiceImpl implements CarService {
     private UserService userService;
     @Autowired
     private ReviewRepository reviewRepository;
+    @Autowired
+    private BookingRepository bookingRepository;
 
     @Override
     public Car createCar(CreateCarRequest request)  {
@@ -320,5 +327,26 @@ public class CarServiceImpl implements CarService {
         car.setIsAvailable(false);
         carRepository.save(car);
         // TODO: Send notification to owner with rejection reason
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Map<String, Object>> getCarBookedDates(Long carId) {
+        // Get all confirmed and in-progress bookings for this car
+        List<Booking> bookings = bookingRepository.findByCarId(carId).stream()
+                .filter(booking -> 
+                    booking.getStatus() == BookingStatus.CONFIRMED ||
+                    booking.getStatus() == BookingStatus.IN_PROGRESS ||
+                    booking.getStatus() == BookingStatus.PENDING
+                )
+                .collect(Collectors.toList());
+
+        return bookings.stream().map(booking -> {
+            Map<String, Object> dateMap = new HashMap<>();
+            dateMap.put("startDate", booking.getStartDate().toString());
+            dateMap.put("endDate", booking.getEndDate().toString());
+            dateMap.put("status", booking.getStatus().toString());
+            return dateMap;
+        }).collect(Collectors.toList());
     }
 }

@@ -35,7 +35,7 @@ public class AnalyticsServiceImpl implements AnalyticsService {
             year = LocalDateTime.now().getYear();
         }
 
-        List<Car> ownerCars = carRepository.findByCreatedByUserId(ownerId);
+        List<Car> ownerCars = carRepository.findByIdUserCreated(ownerId);
         List<Long> carIds = ownerCars.stream().map(Car::getId).collect(Collectors.toList());
 
         if (carIds.isEmpty()) {

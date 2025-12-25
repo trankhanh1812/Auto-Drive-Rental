@@ -1,15 +1,14 @@
 package com.carrental.backend.repository.car;
 
-import com.carrental.backend.entity.Car;
-import com.carrental.backend.enums.CarStatus;
-import com.carrental.backend.enums.CarType;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import com.carrental.backend.entity.Car;
+import com.carrental.backend.enums.CarType;
 
 @Repository
 public interface CarRepository extends JpaRepository<Car, Long>, CarRepositoryCustom {
@@ -28,8 +27,6 @@ public interface CarRepository extends JpaRepository<Car, Long>, CarRepositoryCu
     List<Car> findByPricePerDayBetween(BigDecimal minPrice, BigDecimal maxPrice);
 
     List<Car> findByIdUserCreated(Long ownerId);
-    
-    List<Car> findByCreatedByUserId(Long ownerId);
 
     Long countByIdUserCreated(Long ownerId);
 

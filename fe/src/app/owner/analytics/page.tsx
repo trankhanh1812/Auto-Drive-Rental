@@ -4,7 +4,10 @@ import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { UserRole } from "@/types";
-import { analyticsService, RevenueAnalytics } from "@/lib/services/analyticsService";
+import {
+  analyticsService,
+  RevenueAnalytics,
+} from "@/lib/services/analyticsService";
 import {
   TrendingUp,
   DollarSign,
@@ -37,7 +40,9 @@ export default function AnalyticsPage() {
   const [loading, setLoading] = useState(true);
   const [analytics, setAnalytics] = useState<RevenueAnalytics | null>(null);
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-  const [activeTab, setActiveTab] = useState<"revenue" | "bookings" | "ratings" | "customers">("revenue");
+  const [activeTab, setActiveTab] = useState<
+    "revenue" | "bookings" | "ratings" | "customers"
+  >("revenue");
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -83,7 +88,13 @@ export default function AnalyticsPage() {
     );
   }
 
-  const { overview, monthlyRevenue, bookingTrends, ratingAnalysis, customerDemographics } = analytics;
+  const {
+    overview,
+    monthlyRevenue,
+    bookingTrends,
+    ratingAnalysis,
+    customerDemographics,
+  } = analytics;
 
   // Prepare chart data
   const revenueChartData = monthlyRevenue.map((item) => ({
@@ -93,18 +104,20 @@ export default function AnalyticsPage() {
   }));
 
   const bookingChartData = bookingTrends.map((item) => ({
-    name: item.period.split("-")[1] ? `T${item.period.split("-")[1]}` : item.period,
+    name: item.period.split("-")[1]
+      ? `T${item.period.split("-")[1]}`
+      : item.period,
     Hoàn_thành: item.completedBookings,
     Đã_xác_nhận: item.confirmedBookings,
     Đã_hủy: item.cancelledBookings,
   }));
 
-  const ratingDistributionData = Object.entries(ratingAnalysis.ratingDistribution).map(
-    ([rating, count]) => ({
-      name: `${rating} sao`,
-      value: count,
-    })
-  );
+  const ratingDistributionData = Object.entries(
+    ratingAnalysis.ratingDistribution
+  ).map(([rating, count]) => ({
+    name: `${rating} sao`,
+    value: count,
+  }));
 
   const regionData = Object.entries(customerDemographics.customersByRegion)
     .map(([region, count]) => ({
@@ -114,7 +127,15 @@ export default function AnalyticsPage() {
     .sort((a, b) => b.value - a.value)
     .slice(0, 10);
 
-  const COLORS = ["#8b5cf6", "#6366f1", "#3b82f6", "#06b6d4", "#10b981", "#f59e0b", "#ef4444"];
+  const COLORS = [
+    "#8b5cf6",
+    "#6366f1",
+    "#3b82f6",
+    "#06b6d4",
+    "#10b981",
+    "#f59e0b",
+    "#ef4444",
+  ];
 
   const tabs = [
     { id: "revenue" as const, name: "Doanh thu", icon: DollarSign },
@@ -133,12 +154,14 @@ export default function AnalyticsPage() {
               <BarChart3 className="w-8 h-8 text-purple-600" />
               Thống kê & Phân tích
             </h1>
-            <p className="text-gray-600 mt-2">Báo cáo chi tiết về doanh thu và hoạt động kinh doanh</p>
+            <p className="text-gray-600 mt-2">
+              Báo cáo chi tiết về doanh thu và hoạt động kinh doanh
+            </p>
           </div>
           <select
             value={selectedYear}
             onChange={(e) => setSelectedYear(Number(e.target.value))}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+            className="px-4 py-2 border text-gray-700 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent"
           >
             {[2024, 2025, 2026].map((year) => (
               <option key={year} value={year}>
@@ -163,7 +186,9 @@ export default function AnalyticsPage() {
             <p className="text-2xl font-bold text-gray-900">
               {overview.totalRevenue.toLocaleString("vi-VN")}đ
             </p>
-            <p className={`text-sm mt-2 ${overview.revenueGrowth >= 0 ? "text-green-600" : "text-red-600"}`}>
+            <p
+              className={`text-sm mt-2 ${overview.revenueGrowth >= 0 ? "text-green-600" : "text-red-600"}`}
+            >
               {overview.revenueGrowth > 0 ? "+" : ""}
               {overview.revenueGrowth.toFixed(1)}% so với tháng trước
             </p>
@@ -172,8 +197,12 @@ export default function AnalyticsPage() {
           <div className="bg-white rounded-lg shadow p-6">
             <Calendar className="w-8 h-8 text-blue-500 mb-4" />
             <p className="text-sm text-gray-600 mb-1">Tổng booking</p>
-            <p className="text-2xl font-bold text-gray-900">{overview.totalBookings}</p>
-            <p className="text-sm text-gray-700 mt-2 font-medium">Trong năm {selectedYear}</p>
+            <p className="text-2xl font-bold text-gray-900">
+              {overview.totalBookings}
+            </p>
+            <p className="text-sm text-gray-700 mt-2 font-medium">
+              Trong năm {selectedYear}
+            </p>
           </div>
 
           <div className="bg-white rounded-lg shadow p-6">
@@ -182,7 +211,9 @@ export default function AnalyticsPage() {
             <p className="text-2xl font-bold text-gray-900">
               {ratingAnalysis.averageRating.toFixed(1)}/5.0
             </p>
-            <p className="text-sm text-gray-700 mt-2 font-medium">Từ tất cả đánh giá</p>
+            <p className="text-sm text-gray-700 mt-2 font-medium">
+              Từ tất cả đánh giá
+            </p>
           </div>
 
           <div className="bg-white rounded-lg shadow p-6">
@@ -252,19 +283,25 @@ export default function AnalyticsPage() {
 
                 <div className="mt-8 grid md:grid-cols-3 gap-4">
                   <div className="bg-purple-50 rounded-lg p-4">
-                    <p className="text-sm text-purple-600 font-medium">Tháng này</p>
+                    <p className="text-sm text-purple-600 font-medium">
+                      Tháng này
+                    </p>
                     <p className="text-2xl font-bold text-purple-900 mt-1">
                       {overview.thisMonthRevenue.toLocaleString("vi-VN")}đ
                     </p>
                   </div>
                   <div className="bg-blue-50 rounded-lg p-4">
-                    <p className="text-sm text-blue-600 font-medium">Tháng trước</p>
+                    <p className="text-sm text-blue-600 font-medium">
+                      Tháng trước
+                    </p>
                     <p className="text-2xl font-bold text-blue-900 mt-1">
                       {overview.lastMonthRevenue.toLocaleString("vi-VN")}đ
                     </p>
                   </div>
                   <div className="bg-green-50 rounded-lg p-4">
-                    <p className="text-sm text-green-600 font-medium">Trung bình/Booking</p>
+                    <p className="text-sm text-green-600 font-medium">
+                      Trung bình/Booking
+                    </p>
                     <p className="text-2xl font-bold text-green-900 mt-1">
                       {overview.averageBookingValue.toLocaleString("vi-VN")}đ
                     </p>
@@ -297,10 +334,14 @@ export default function AnalyticsPage() {
             {/* Ratings Tab */}
             {activeTab === "ratings" && (
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-6">Phân tích đánh giá</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-6">
+                  Phân tích đánh giá
+                </h3>
                 <div className="grid md:grid-cols-2 gap-8">
                   <div>
-                    <h4 className="text-lg font-medium text-gray-900 mb-4">Phân bố đánh giá</h4>
+                    <h4 className="text-lg font-medium text-gray-900 mb-4">
+                      Phân bố đánh giá
+                    </h4>
                     <ResponsiveContainer width="100%" height={300}>
                       <PieChart>
                         <Pie
@@ -308,13 +349,18 @@ export default function AnalyticsPage() {
                           cx="50%"
                           cy="50%"
                           labelLine={false}
-                          label={({ name, percent }) => `${name}: ${((percent || 0) * 100).toFixed(0)}%`}
+                          label={({ name, percent }) =>
+                            `${name}: ${((percent || 0) * 100).toFixed(0)}%`
+                          }
                           outerRadius={80}
                           fill="#8884d8"
                           dataKey="value"
                         >
                           {ratingDistributionData.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                            <Cell
+                              key={`cell-${index}`}
+                              fill={COLORS[index % COLORS.length]}
+                            />
                           ))}
                         </Pie>
                         <Tooltip />
@@ -356,11 +402,15 @@ export default function AnalyticsPage() {
             {/* Customers Tab */}
             {activeTab === "customers" && (
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-6">Phân tích khách hàng</h3>
-                
+                <h3 className="text-xl font-semibold text-gray-900 mb-6">
+                  Phân tích khách hàng
+                </h3>
+
                 <div className="grid md:grid-cols-2 gap-8 mb-8">
                   <div>
-                    <h4 className="text-lg font-medium text-gray-900 mb-4">Khách hàng theo khu vực</h4>
+                    <h4 className="text-lg font-medium text-gray-900 mb-4">
+                      Khách hàng theo khu vực
+                    </h4>
                     <ResponsiveContainer width="100%" height={300}>
                       <BarChart data={regionData} layout="vertical">
                         <CartesianGrid strokeDasharray="3 3" />
@@ -373,16 +423,22 @@ export default function AnalyticsPage() {
                   </div>
 
                   <div>
-                    <h4 className="text-lg font-medium text-gray-900 mb-4">Thống kê khách hàng</h4>
+                    <h4 className="text-lg font-medium text-gray-900 mb-4">
+                      Thống kê khách hàng
+                    </h4>
                     <div className="space-y-4">
                       <div className="bg-blue-50 rounded-lg p-4">
-                        <p className="text-sm text-blue-600 font-medium">Tổng khách hàng</p>
+                        <p className="text-sm text-blue-600 font-medium">
+                          Tổng khách hàng
+                        </p>
                         <p className="text-3xl font-bold text-blue-900 mt-1">
                           {customerDemographics.totalUniqueCustomers}
                         </p>
                       </div>
                       <div className="bg-green-50 rounded-lg p-4">
-                        <p className="text-sm text-green-600 font-medium">Khách quay lại</p>
+                        <p className="text-sm text-green-600 font-medium">
+                          Khách quay lại
+                        </p>
                         <p className="text-3xl font-bold text-green-900 mt-1">
                           {customerDemographics.returningCustomers}
                           <span className="text-lg ml-2">
@@ -397,7 +453,9 @@ export default function AnalyticsPage() {
                         </p>
                       </div>
                       <div className="bg-purple-50 rounded-lg p-4">
-                        <p className="text-sm text-purple-600 font-medium">Khách mới</p>
+                        <p className="text-sm text-purple-600 font-medium">
+                          Khách mới
+                        </p>
                         <p className="text-3xl font-bold text-purple-900 mt-1">
                           {customerDemographics.newCustomers}
                         </p>
@@ -408,7 +466,9 @@ export default function AnalyticsPage() {
 
                 {/* Top Customers */}
                 <div>
-                  <h4 className="text-lg font-medium text-gray-900 mb-4">Top 10 khách hàng</h4>
+                  <h4 className="text-lg font-medium text-gray-900 mb-4">
+                    Top 10 khách hàng
+                  </h4>
                   <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
                     <table className="min-w-full divide-y divide-gray-200">
                       <thead className="bg-gray-50">
@@ -428,24 +488,29 @@ export default function AnalyticsPage() {
                         </tr>
                       </thead>
                       <tbody className="bg-white divide-y divide-gray-200">
-                        {customerDemographics.topCustomers.map((customer, index) => (
-                          <tr key={customer.userId} className="hover:bg-gray-50">
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 font-medium">
-                              {index + 1}
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-gray-900">
-                                {customer.fullName}
-                              </div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 font-medium">
-                              {customer.bookingCount} lần
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-green-600">
-                              {customer.totalSpent.toLocaleString("vi-VN")}đ
-                            </td>
-                          </tr>
-                        ))}
+                        {customerDemographics.topCustomers.map(
+                          (customer, index) => (
+                            <tr
+                              key={customer.userId}
+                              className="hover:bg-gray-50"
+                            >
+                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 font-medium">
+                                {index + 1}
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap">
+                                <div className="text-sm font-medium text-gray-900">
+                                  {customer.fullName}
+                                </div>
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 font-medium">
+                                {customer.bookingCount} lần
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-green-600">
+                                {customer.totalSpent.toLocaleString("vi-VN")}đ
+                              </td>
+                            </tr>
+                          )
+                        )}
                       </tbody>
                     </table>
                   </div>

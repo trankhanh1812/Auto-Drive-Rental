@@ -57,6 +57,10 @@ public class Booking {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_id", nullable = false)
     private Car car;
+    
+    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private java.util.List<Payment> payments;
+    
     private LocalDateTime actualStartDate;
 
     private LocalDateTime actualEndDate;
